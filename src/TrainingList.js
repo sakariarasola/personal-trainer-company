@@ -11,14 +11,22 @@ export default function TrainingList() {
 
 
     const fetchData = () => {
-        fetch('https://traineeapp.azurewebsites.net/api/trainings')
+        fetch('https://traineeapp.azurewebsites.net/gettrainings')
             .then(response => response.json())
-            .then(data => setTrainings(data.content))
+            .then(data => setTrainings(data))
             .then(data => console.log(data))
             .catch(error => console.error(error));
     }
 
     const columns = [
+        {
+            Header: 'First name',
+            accessor: 'customer.firstname'
+        },
+        {
+            Header: 'Last name',
+            accessor: 'customer.lastname'
+        },
         {
             Header: 'Date',
             accessor: 'date',
@@ -33,7 +41,7 @@ export default function TrainingList() {
         {
             Header: 'Activity',
             accessor: 'activity'
-        }
+        },
     ]
 
     return (

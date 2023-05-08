@@ -44,7 +44,7 @@ export default function CustomerList() {
         {
             Header: 'Phone',
             accessor: 'phone'
-        }
+        },
     ]
 
     return (
