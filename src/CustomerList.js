@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+import Button from '@mui/material/Button';
+import AddCustomer from './AddCustomer';
+import EditCustomer from './EditCustomer';
 
 export default function CustomerList() {
 
@@ -14,6 +17,34 @@ export default function CustomerList() {
             .then(data => setCustomers(data.content))
             .then(data => console.log(data))
             .catch(error => console.error(error));
+    }
+
+    const deleteCustomer = (id) => {
+        if (window.confirm('Confirm delete?')) {
+            fetch(`https://traineeapp.azurewebsites.net/api/customers/${id}`, { method: 'DELETE' })
+                .then(resp => fetchData())
+                .catch(err => console.error(err));
+        }
+    }
+
+    const saveCustomer = (customer) => {
+        fetch('https://traineeapp.azurewebsites.net/api/customers', {
+            method: 'POST', headers: {
+                'Content-Type': 'application/json'
+            }, body: JSON.stringify(customer)
+        })
+            .then(resp => fetchData())
+            .catch(err => console.error(err));
+    }
+
+    const editCustomer = (customer, link) => {
+        fetch(link, {
+            method: 'PUT', headers: {
+                'Content-Type': 'application/json'
+            }, body: JSON.stringify(customer)
+        })
+            .then(resp => fetchData())
+            .catch(err => console.error(err))
     }
 
     const columns = [
@@ -45,10 +76,25 @@ export default function CustomerList() {
             Header: 'Phone',
             accessor: 'phone'
         },
+        {
+            sortable: false,
+            filterable: false,
+            width: 100,
+            Cell: row => <EditCustomer editCustomer={editCustomer} customer={row.original} />
+        },
+        {
+            sortable: false,
+            filterable: false,
+            width: 100,
+            accessor: 'links.customer.href.{id}',
+            Cell: row => <Button onClick={() => deleteCustomer(row.original.links[1].href.split('/').pop())}>Delete</Button>
+
+        },
     ]
 
     return (
         <div>
+            <AddCustomer saveCustomer={saveCustomer} />
             <ReactTable filterable={true} data={customers} columns={columns} />
         </div>
     );

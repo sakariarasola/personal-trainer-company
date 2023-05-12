@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import dayjs from 'dayjs';
+import React, { useEffect, useState } from 'react';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import dayjs from 'dayjs';
+import Button from '@mui/material/Button';
 
 export default function TrainingList() {
 
@@ -13,9 +14,18 @@ export default function TrainingList() {
     const fetchData = () => {
         fetch('https://traineeapp.azurewebsites.net/gettrainings')
             .then(response => response.json())
-            .then(data => setTrainings(data))
+            .then(data => { console.log('Data received:', data);
+                setTrainings(data) })
             .then(data => console.log(data))
             .catch(error => console.error(error));
+    }
+
+    const deleteTraining = (id) => {
+        if (window.confirm('Confirm delete?')) {
+            fetch(`https://traineeapp.azurewebsites.net/api/trainings/${id}`, { method: 'DELETE' })
+                .then(resp => fetchData())
+                .catch(err => console.error(err));
+        }
     }
 
     const columns = [
@@ -41,6 +51,15 @@ export default function TrainingList() {
         {
             Header: 'Activity',
             accessor: 'activity'
+        },
+        {
+            sortable: false,
+            filterable: false,
+            width: 100,
+            accessor: 'id',
+            Cell: row => <Button onClick={() => deleteTraining(row.value)}>Delete</Button>
+
+
         },
     ]
 
