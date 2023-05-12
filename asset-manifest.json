@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/personal-trainer-company/static/css/main.db754a86.css",
+    "main.js": "/personal-trainer-company/static/js/main.ce1f8de8.js",
+    "static/js/787.021190aa.chunk.js": "/personal-trainer-company/static/js/787.021190aa.chunk.js",
+    "index.html": "/personal-trainer-company/index.html",
+    "main.db754a86.css.map": "/personal-trainer-company/static/css/main.db754a86.css.map",
+    "main.ce1f8de8.js.map": "/personal-trainer-company/static/js/main.ce1f8de8.js.map",
+    "787.021190aa.chunk.js.map": "/personal-trainer-company/static/js/787.021190aa.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.db754a86.css",
+    "static/js/main.ce1f8de8.js"
+  ]
+}
