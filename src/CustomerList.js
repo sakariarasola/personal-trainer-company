@@ -47,6 +47,20 @@ export default function CustomerList() {
             .catch(err => console.error(err))
     }
 
+    const exportCustomers = () => {
+        const csv = 'data:text/csv;charset=utf-8,' +
+            customers.map(({ firstname, lastname, streetaddress, postcode, city, email, phone }) =>
+                    [firstname, lastname, streetaddress, postcode, city, email, phone].join(','))
+                .join('\n');
+        const uri = encodeURI(csv);
+        const link = document.createElement('a');
+        link.setAttribute('href', uri);
+        link.setAttribute('download', 'customers.csv');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     const columns = [
         {
             Header: 'First name',
@@ -95,6 +109,7 @@ export default function CustomerList() {
     return (
         <div>
             <AddCustomer saveCustomer={saveCustomer} />
+            <Button style={{margin: 10}} variant="outlined" onClick={exportCustomers}>Export as CSV</Button>
             <ReactTable filterable={true} data={customers} columns={columns} />
         </div>
     );

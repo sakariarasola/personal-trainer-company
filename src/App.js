@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import 'react-table/react-table.css';
 import CustomerList from './CustomerList';
 import TrainingList from './TrainingList';
+import Calendar from './Calendar';
 
 export default function App() {
 
@@ -14,10 +15,12 @@ export default function App() {
           <Link to="/">Home</Link>{' '}
           <Link to="/customers">Customers</Link>{' '}
           <Link to="/trainings">Trainings</Link>{' '}
+          <Link to="/calendar">Calendar</Link>{' '}
           <Routes>
             <Route path="/" element={<h1>Welcome!</h1>} />
             <Route path="/customers" element={<CustomerList />} />
             <Route path="/trainings" element={<TrainingList />} />
+            <Route path="/calendar" element={<Calendar />} />
           </Routes>
         </div>
       </BrowserRouter>
